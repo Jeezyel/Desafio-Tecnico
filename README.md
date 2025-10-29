@@ -125,7 +125,7 @@ Como executar a aplicação
    
    passo 4: va na aplicação e subistitua o meu token pelo seu e a url do netbox
    
-Como usar a API: no postman usaremos o get e post o get para coleta de dados e o post pra o tratamento de erro as url usada no postman pode variar de a cordo com o que vc fez ate agora mas a base e o seginte get http://localhost:5000/All e post http://localhost:5000/api/v1/discover passando o intervalos de ips 
+Como usar a API: no postman usaremos o get e post o get para coleta de dados e o post pra o tratamento de erro as url usada no postman pode variar de a cordo com o que vc fez ate agora mas a base e o seginte get http://localhost:5000/, get http://localhost:5000/All e post http://localhost:5000/api/v1/discover passando o intervalos de ips 
   {
     "ips": ["192.168.1.1", "10.0.0.20"]
   }
