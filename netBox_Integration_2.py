@@ -1,3 +1,5 @@
+
+# codigo mais simples para teste de conexao com a API do NetBox
 import requests
 from rich import print as r_print
 

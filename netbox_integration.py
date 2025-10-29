@@ -1,5 +1,4 @@
 # netbox_integration.py  (ou junte ao seu main.py)
-import os
 import requests
 import ipaddress
 from typing import Optional
