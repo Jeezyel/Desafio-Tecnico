@@ -1,8 +1,13 @@
 O que o projeto faz: o projeto ele efetua uma concção com um Netbox local da rede não localhost
+
 Como configurar o ambiente e instalar as dependências
+
   instalação necessarias (docker, python, postman, vscode, git) instalação com o py (flask, rich, requests, json)
-• Como executar a aplicação 
+  
+Como executar a aplicação 
+
    passo 1: crie uma instacia do netbox 
+   
       comandos usado : ls
        1231  cd Área\ de\ trabalho/
        1232  ls
@@ -113,9 +118,13 @@ Como configurar o ambiente e instalar as dependências
        1337  docker-compose exec netbox /bin/bash
        quando tiver dentro do conteiner use os comando para criar um super usuario
        pode ser que vc não use todos mas so os principais que esta no repositorio https://github.com/netbox-community/netbox-docker.git
+       
    passo 2: depos acesse o netbox atraves de um navegador e faça login e senha admin
+   
    passo 3: va em adiministrativo e crie um token pra usar na api
+   
    passo 4: va na aplicação e subistitua o meu token pelo seu e a url do netbox
+   
 Como usar a API: no postman usaremos o get e post o get para coleta de dados e o post pra o tratamento de erro as url usada no postman pode variar de a cordo com o que vc fez ate agora mas a base e o seginte get http://localhost:5000/All e post http://localhost:5000/api/v1/discover passando o intervalos de ips 
   {
     "ips": ["192.168.1.1", "10.0.0.20"]
