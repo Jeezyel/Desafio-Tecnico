@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import json
 import os
+from netbox_integration import sync_device_to_netbox   # IMPORTANTE
 
 app = Flask(__name__)
 
@@ -37,13 +38,15 @@ def discover():
     # Para cada IP solicitado, busca no JSON
     for ip in ips:
         if ip in dados_snmp:
+
+            # Chama o NetBox para criar/atualizar device, interfaces, IPs
+            sync_result = sync_device_to_netbox(dados_snmp[ip])
+
             resposta.append({
                 "ip": ip,
-                "sysName": dados_snmp[ip]["sysName"],
-                "sysDescr": dados_snmp[ip]["sysDescr"],
-                "sysLocation": dados_snmp[ip]["sysLocation"],
-                "sysContact": dados_snmp[ip]["sysContact"],
-                "interfaces": dados_snmp[ip]["interfaces"]
+                "device": dados_snmp[ip]["sysName"],
+                "resultado_netbox": sync_result,   
+                "resultado_json": dados_snmp[ip]
             })
         else:
             resposta.append({
@@ -67,4 +70,6 @@ def All():
     All_Data = ler_snmp_simulado()
     return jsonify(All_Data), 200
 
-app.run(port=5000, host="localhost", debug=True)
+
+if __name__ == "__main__":
+    app.run(port=5000, host="localhost", debug=True)
