@@ -1,7 +1,8 @@
 from flask import Flask, jsonify, request
 import json
 import os
-from netbox_integration import sync_device_to_netbox   # IMPORTANTE
+from netbox_integration import sync_device_to_netbox
+import netbox_integration   # IMPORTANTE
 
 app = Flask(__name__)
 
@@ -59,7 +60,29 @@ def discover():
         "dispositivos": resposta
     }), 200
 
+# ---- Rotas adicionais para teste ----
+@app.route("/adicionar", methods=["POST"])
+def adicionar():
+    dados = request.get_json()
 
+    device_type = dados.get("device_type")
+    role = dados.get("role")
+    site = dados.get("site")
+
+    payload = {
+        "device_type": device_type,
+        "role": role,
+        "site": site
+    }
+
+    try:
+        netbox_integration.nb_post(jsonify(payload))
+        return jsonify({"status": "Dados enviados com sucesso"}), 200
+    
+    except Exception as e:
+        return jsonify({"erro": f"Falha ao salvar dados os ids passados tem que esta previamente salvo: {str(e)}"}), 500
+
+# ---- Rotas adicionais para teste ----
 @app.route("/", methods=["GET"])
 def home():
     return jsonify({"status": "API funcionando!"}), 200
@@ -68,8 +91,8 @@ def home():
 @app.route("/All", methods=["GET"])
 def All():
     All_Data = ler_snmp_simulado()
-    return jsonify(All_Data), 200
+    All_Data_Netbox = netbox_integration.nb_get("dcim/devices/")  # Puxa todos os devices do Netbox
+    return jsonify(All_Data,All_Data_Netbox), 200
 
 
-if __name__ == "__main__":
-    app.run(port=5000, host="localhost", debug=True)
+app.run(port=5000, host="localhost", debug=True)

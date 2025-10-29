@@ -4,29 +4,32 @@ import requests
 import ipaddress
 from typing import Optional
 
-NETBOX_API_URL = os.getenv("NETBOX_API_URL", "http://192.168.10.114:8000/api")
-NETBOX_API_TOKEN = os.getenv("e15cada4fc7f10c7f7e85d957dc55fcd043afffe")  
+# NETBOX_API_URL = os.getenv("NETBOX_API_URL", "http://192.168.10.114:8000/api")
+# NETBOX_API_TOKEN = os.getenv("NETBOX_API_TOKEN", "e15cada4fc7f10c7f7e85d957dc55fcd043afffe")  
 
-HEADERS = {
-    "Authorization": f"Token {NETBOX_API_TOKEN}" if NETBOX_API_TOKEN else "",
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-}
+#HEADERS = {
+#    "Authorization": f"Token {NETBOX_API_TOKEN}" if NETBOX_API_TOKEN else "",
+#    "Content-Type": "application/json",
+#    "Accept": "application/json",
+#}
 
-REQUEST_TIMEOUT = 10
+HEADERS = {"Authorization" : "Token e15cada4fc7f10c7f7e85d957dc55fcd043afffe"}
+url = "http://192.168.10.114:8000/api"
+
+REQUEST_TIMEOUT = 40
 
 
 # ---- HTTP helpers ----
 def nb_get(path: str, params: dict = None):
-    url = f"{NETBOX_API_URL.rstrip('/')}/{path.lstrip('/')}"
-    resp = requests.get(url, headers=HEADERS, params=params, timeout=REQUEST_TIMEOUT)
+    url = "http://192.168.10.114:8000/api/dcim/devices"
+    resp = requests.get(url, headers=HEADERS, verify=False, timeout=REQUEST_TIMEOUT, params=params)
     resp.raise_for_status()
     return resp.json()
 
 
 def nb_post(path: str, payload: dict):
-    url = f"{NETBOX_API_URL.rstrip('/')}/{path.lstrip('/')}"
-    resp = requests.post(url, headers=HEADERS, json=payload, timeout=REQUEST_TIMEOUT)
+    url = "http://192.168.10.114:8000/api/dcim/devices"
+    resp = requests.post(url, headers=HEADERS, json=payload, verify=False, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     return resp.json()
 
